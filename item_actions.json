@@ -2,7 +2,7 @@
     {
         "type": "item_action",
         "id": "IUSE_EBOOK_SCAN_BOOK",
-        "name": "Begin scanning books"
+        "name": "Begin digitizing books"
     },
     {
         "type": "item_action",
