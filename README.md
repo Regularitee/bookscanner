@@ -9,3 +9,5 @@ How to use:
 - Obtain ebook scanner
 - ???
 - Profit.
+
+The original author of this mod is [Lispcoc](https://github.com/lispcoc), who requested that this mod be licensed in CC-SA3.0. 
