@@ -20,7 +20,8 @@
             "EINKTABLETPC",
             "IUSE_EBOOK_SCAN_BOOK",
             "IUSE_EBOOK_CRAFT",
-            "IUSE_EBOOK_LIST"
+            "IUSE_EBOOK_LIST",
+            "IUSE_EBOOK_READ"
         ],
         "flags": [
             "WATCH"
