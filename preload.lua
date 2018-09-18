@@ -125,7 +125,27 @@ function ebook_list_menu(it)
 end
 
 function iuse_ebook_list(it, active)
-    ebook_list_menu(it)
+    local ret = ebook_list_menu(it)
+    if ret then
+        local dummy = item(ret, -1)
+        local info = dummy:info(true)
+        local um = game.create_uimenu()
+        local str = ""
+        local cnt = 0
+        -- @todo: UI to be refined.
+        for line in string.gmatch(info, "[^\n]+") do
+            str = str .. line .. "\n"
+            cnt = cnt + 1
+            if cnt == 10 then
+                game.popup(str)
+                str = ""
+                cnt = 0
+            end
+        end
+        if str ~= "" then
+            game.popup(str)
+        end
+    end
     return 0
 end
 
