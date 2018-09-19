@@ -125,14 +125,63 @@ function ebook_list_menu(it)
 end
 
 function iuse_ebook_list(it, active)
-    ebook_list_menu(it)
+    local ret = ebook_list_menu(it)
+    if ret then
+        local dummy = item(ret, -1)
+        local info = dummy:info(true)
+        local um = game.create_uimenu()
+        local str = ""
+        local cnt = 0
+        -- @todo: UI to be refined.
+        for line in string.gmatch(info, "[^\n]+") do
+            str = str .. line .. "\n"
+            cnt = cnt + 1
+            if cnt == 10 then
+                game.popup(str)
+                str = ""
+                cnt = 0
+            end
+        end
+        if str ~= "" then
+            game.popup(str)
+        end
+    end
     return 0
+end
+
+function iuse_ebook_read(it, active)
+    local dummy_itype = ebook_list_menu(it)
+    if not dummy_itype then
+        return 0
+    end
+    local reading_book = player:i_add(item(dummy_itype, -1))
+    reading_book:set_var("volume", 0)
+    reading_book:set_var("weight", 0)
+    reading_book:set_var("ebook_dummy", "dummy")
+    local ret = false
+    local item_num = 0
+    local tmp = player:i_at(item_num)
+    while not tmp:is_null() do
+        tmp = player:i_at(item_num)
+        if tmp:typeId() == dummy_itype then
+            ret = player:read(item_num)
+            break
+        end
+        item_num = item_num + 1
+    end
+    if not ret then
+        player:i_rem(item_num)
+        return 0
+    end
+    player:consume_charges(it, it:ammo_required())
+    return it:ammo_required()
 end
 
 function on_preload()
     game.register_iuse("IUSE_EBOOK_SCAN_BOOK", iuse_ebook_scan_book)
     game.register_iuse("IUSE_EBOOK_CRAFT", iuse_ebook_craft)
     game.register_iuse("IUSE_EBOOK_LIST", iuse_ebook_list)
+    game.register_iuse("IUSE_EBOOK_READ", iuse_ebook_read)
 end
 
 on_preload()
