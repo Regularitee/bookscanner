@@ -3,7 +3,7 @@ local MOD = {}
 mods["add_ebook"] = MOD
 
 function MOD.on_turn_passed()
-    if not player:has_activity(activity_id("ACT_READ")) then
+    if not (player:has_activity(activity_id("ACT_READ")) or player:has_activity(activity_id("ACT_CRAFT"))) then
         local item_num = 0
         local tmp = player:i_at(item_num)
         while not tmp:is_null() do
